@@ -3,21 +3,21 @@ import { Program, Wallet, AnchorProvider } from "@coral-xyz/anchor";
 import { IDL, Turbin3Prereq } from "./programs/Turbin3_prereq";
 import wallet from "./Turbin3-wallet.json";
 
-// Load the keypair from your Turbin3-wallet.json file
+// Load the generated keypair from my Turbin3-wallet.json file
 const keypair = Keypair.fromSecretKey(new Uint8Array(wallet));
 
-// Create a connection to Solana devnet
+// Creating a connection to Solana devnet
+
 const connection = new Connection("https://api.devnet.solana.com");
 
-// Replace "<your github account>" with your actual GitHub username
 const github = Buffer.from("NVN404", "utf8");
 
-// Create an Anchor provider
+// Creating an Anchor provider
 const provider = new AnchorProvider(connection, new Wallet(keypair), {
     commitment: "confirmed",
 });
 
-// Instantiate the Turbin3 program using the IDL
+// importing or initiating the Turbin3 program using the IDL
 const program: Program<Turbin3Prereq> = new Program(IDL, provider);
 
 // Derive the PDA for the enrollment account
@@ -27,7 +27,7 @@ const [enrollment_key, _bump] = PublicKey.findProgramAddressSync(
     program.programId
 );
 
-// Execute the enrollment transaction
+// Executing the enrollment transaction
 (async () => {
     try {
         const txhash = await program.methods
